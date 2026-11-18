@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Criar conta | VetCare{% endblock %}
+{% block content %}
+<div class="login-page">
+  <div class="login-waves" aria-hidden="true"><span></span><span></span><span></span></div>
+  <section class="login-panel login-panel-wide">
+    <div class="login-brand"><img class="login-logo" src="{{ url_for('static', filename='images/vetcare-logo.svg') }}" alt=""><span>VetCare</span></div>
+
+    <div class="auth-tabs" aria-label="Acesso ao sistema">
+      <a class="auth-tab" href="{{ url_for('auth.login') }}">Entrar</a>
+      <a class="auth-tab active" href="{{ url_for('auth.cadastro') }}">Criar conta</a>
+    </div>
+
+    <h1>Nova conta</h1>
+    <p class="text-secondary">Cadastre-se para acessar o sistema</p>
+
+    <form method="post">
+      {{ form.hidden_tag() }}
+
+      <div class="mb-3">
+        {{ form.nome.label(class='form-label') }}
+        {{ form.nome(class='form-control form-control-lg', autocomplete='name', placeholder='Seu nome completo') }}
+        {% for erro in form.nome.errors %}<div class="field-error">{{ erro }}</div>{% endfor %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.login.label(class='form-label') }}
+        {{ form.login(class='form-control form-control-lg', autocomplete='username', placeholder='ex.: maria.silva') }}
+        {% for erro in form.login.errors %}<div class="field-error">{{ erro }}</div>{% endfor %}
+      </div>
+
+      <div class="mb-3">
+        {{ form.senha.label(class='form-label') }}
+        {{ form.senha(class='form-control form-control-lg', autocomplete='new-password', placeholder='Mínimo 8 caracteres') }}
+        <div class="password-strength"><span></span><span></span><span></span></div>
+        {% for erro in form.senha.errors %}<div class="field-error">{{ erro }}</div>{% endfor %}
+      </div>
+
+      <div class="mb-4">
+        {{ form.confirmar_senha.label(class='form-label') }}
+        {{ form.confirmar_senha(class='form-control form-control-lg', autocomplete='new-password') }}
+        {% for erro in form.confirmar_senha.errors %}<div class="field-error">{{ erro }}</div>{% endfor %}
+      </div>
+
+      <button class="btn btn-primary btn-lg w-100" type="submit">Criar conta</button>
+    </form>
+  </section>
+</div>
+{% endblock %}

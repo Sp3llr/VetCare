@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">VetCare</title>
+  <rect width="64" height="64" rx="16" fill="#159E9D"/>
+  <path d="M32 15v34M15 32h34" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round"/>
+  <circle cx="32" cy="32" r="8" fill="#155E75"/>
+  <circle cx="32" cy="32" r="3.5" fill="#67DAD5"/>
+  <ellipse cx="18" cy="18" rx="5" ry="7" fill="#67DAD5" transform="rotate(-35 18 18)"/>
+  <ellipse cx="46" cy="18" rx="5" ry="7" fill="#67DAD5" transform="rotate(35 46 18)"/>
+  <ellipse cx="18" cy="46" rx="5" ry="7" fill="#67DAD5" transform="rotate(35 18 46)"/>
+  <ellipse cx="46" cy="46" rx="5" ry="7" fill="#67DAD5" transform="rotate(-35 46 46)"/>
+</svg>

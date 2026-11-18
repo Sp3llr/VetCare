@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Clínica Veterinária{% endblock %}</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=logout-outline4">
+</head>
+<body>
+{% if current_user.is_authenticated %}
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <button class="sidebar-toggle" id="sidebarToggle" type="button" aria-label="Recolher menu lateral" aria-expanded="true" title="Recolher menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+    <a class="brand brand-link" href="{{ url_for('main.dashboard') }}" aria-label="VetCare - painel"><img class="brand-logo" src="{{ url_for('static', filename='images/vetcare-logo.svg') }}" alt=""><span>VetCare</span></a>
+    <nav class="nav flex-column">
+      <a class="nav-link {% if request.endpoint == 'main.dashboard' %}active{% endif %}" href="{{ url_for('main.dashboard') }}" title="Painel"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>Painel</span></a>
+      <a class="nav-link {% if request.endpoint == 'main.tutores' %}active{% endif %}" href="{{ url_for('main.tutores') }}" title="Tutores"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg><span>Tutores</span></a>
+      <a class="nav-link {% if request.endpoint == 'main.pets' %}active{% endif %}" href="{{ url_for('main.pets') }}" title="Pets"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="9" r="2"/><circle cx="19" cy="9" r="2"/><circle cx="8" cy="5" r="2"/><circle cx="16" cy="5" r="2"/></svg><span>Pets</span></a>
+      <a class="nav-link {% if request.endpoint == 'main.agendamentos' %}active{% endif %}" href="{{ url_for('main.agendamentos') }}" title="Agendamentos"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/><path d="m8 16 2 2 5-5"/></svg><span>Agendamentos</span></a>
+      {% if current_user.perfil == 'administrador' %}<a class="nav-link {% if request.endpoint == 'main.auditoria' %}active{% endif %}" href="{{ url_for('main.auditoria') }}" title="Auditoria"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M9 12l2 2 4-4"/></svg><span>Auditoria</span></a>{% endif %}
+    </nav>
+    <div class="sidebar-user">
+      <div class="sidebar-profile">
+        <div class="sidebar-avatar" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21v-2a7 7 0 0 1 14 0v2Z"/></svg>
+        </div>
+        <div class="sidebar-user-copy">
+          <small>{{ current_user.perfil|capitalize }}</small>
+          <strong title="{{ current_user.nome }}">{{ current_user.nome }}</strong>
+        </div>
+      </div>
+      <form method="post" action="{{ url_for('auth.logout') }}" class="sidebar-logout-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="sidebar-logout vetcare-logout" type="submit" title="Sair" aria-label="Sair do sistema">
+          <span>Sair</span>
+        </button>
+      </form>
+    </div>
+  </aside>
+  <main class="content">
+{% else %}
+<main>
+{% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">{{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

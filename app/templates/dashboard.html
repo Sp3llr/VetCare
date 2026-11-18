@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Painel | VetCare{% endblock %}
+{% block content %}
+<div class="breadcrumb-soft">Painel / Visão geral</div>
+<section class="dashboard-hero">
+  <div>
+    <p class="eyebrow">CENTRAL DE OPERAÇÕES</p>
+    <p class="dashboard-user-label">Usuário conectado</p>
+    <h1><span class="dashboard-welcome">Bem-vindo,</span> <span class="dashboard-user-name">{{ current_user.nome }}</span></h1>
+    <p class="dashboard-summary">Resumo rápido da clínica e próximos atendimentos.</p>
+  </div>
+  <a class="btn dashboard-primary-action" href="{{ url_for('main.agendamentos') }}">
+    <span aria-hidden="true">+</span> Novo agendamento
+  </a>
+</section>
+
+<div class="dashboard-grid" aria-label="Indicadores gerais">
+  <a class="metric-card" href="{{ url_for('main.tutores') }}">
+    <div class="metric-icon metric-icon-tutor" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    </div>
+    <div><span>Tutores</span><strong>{{ tutores }}</strong><small>Cadastro ativo</small></div>
+    <span class="metric-arrow" aria-hidden="true">›</span>
+  </a>
+
+  <a class="metric-card" href="{{ url_for('main.pets') }}">
+    <div class="metric-icon metric-icon-pet" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="9" r="2"/><circle cx="19" cy="9" r="2"/><circle cx="8" cy="5" r="2"/><circle cx="16" cy="5" r="2"/></svg>
+    </div>
+    <div><span>Pets</span><strong>{{ pets }}</strong><small>Animais atendidos</small></div>
+    <span class="metric-arrow" aria-hidden="true">›</span>
+  </a>
+
+  <a class="metric-card" href="{{ url_for('main.agendamentos') }}">
+    <div class="metric-icon metric-icon-calendar" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+    </div>
+    <div><span>Agendamentos</span><strong>{{ agendamentos }}</strong><small>Todos os registros</small></div>
+    <span class="metric-arrow" aria-hidden="true">›</span>
+  </a>
+</div>
+
+<div class="dashboard-layout">
+  <section class="panel upcoming-panel">
+    <div class="panel-header">
+      <div><p class="eyebrow">AGENDA</p><h2>Próximos atendimentos</h2></div>
+      <a class="btn btn-outline-primary btn-sm" href="{{ url_for('main.agendamentos') }}">Ver agenda</a>
+    </div>
+    <div class="table-responsive"><table class="table align-middle dashboard-table">
+      <thead><tr><th>Data e hora</th><th>Pet</th><th>Tutor</th><th>Status</th></tr></thead>
+      <tbody>{% for item in recentes %}<tr><td><strong>{{ item.data_agendamento.strftime('%d/%m') }}</strong><span class="table-time">{{ item.data_agendamento.strftime('%H:%M') }}</span></td><td><strong>{{ item.pet.nome }}</strong><span class="table-detail">{{ item.pet.especie }}</span></td><td>{{ item.pet.tutor.nome }}</td><td><span class="status">{{ item.status }}</span></td></tr>{% else %}<tr><td colspan="4" class="empty-state">Nenhum agendamento cadastrado.</td></tr>{% endfor %}</tbody>
+    </table></div>
+  </section>
+
+  <aside class="quick-actions panel">
+    <p class="eyebrow">ATALHOS</p>
+    <h2>Ações rápidas</h2>
+    <a href="{{ url_for('main.tutores') }}"><span>+</span><div><strong>Novo tutor</strong><small>Cadastrar responsável</small></div></a>
+    <a href="{{ url_for('main.pets') }}"><span>+</span><div><strong>Novo pet</strong><small>Vincular ao tutor</small></div></a>
+    <a href="{{ url_for('main.agendamentos') }}"><span>+</span><div><strong>Novo atendimento</strong><small>Adicionar à agenda</small></div></a>
+  </aside>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Entrar | VetCare{% endblock %}
+{% block content %}
+<div class="login-page">
+  <div class="login-waves" aria-hidden="true"><span></span><span></span><span></span></div>
+  <section class="login-panel">
+    <div class="login-brand"><img class="login-logo" src="{{ url_for('static', filename='images/vetcare-logo.svg') }}" alt=""><span>VetCare</span></div>
+    <div class="auth-tabs" aria-label="Acesso ao sistema">
+      <a class="auth-tab active" href="{{ url_for('auth.login') }}">Entrar</a>
+      <a class="auth-tab" href="{{ url_for('auth.cadastro') }}">Criar conta</a>
+    </div>
+
+    <h1>Bem-vindo</h1>
+    <p class="text-secondary">Acesse o sistema da clínica</p>
+    <form method="post">
+      {{ form.hidden_tag() }}
+      <div class="mb-3">
+        {{ form.login.label(class='form-label') }}
+        {{ form.login(class='form-control form-control-lg', autocomplete='username') }}
+      </div>
+      <div class="mb-4">
+        {{ form.senha.label(class='form-label') }}
+        {{ form.senha(class='form-control form-control-lg', autocomplete='current-password') }}
+      </div>
+      <button class="btn btn-primary btn-lg w-100" type="submit">Entrar</button>
+    </form>
+  </section>
+</div>
+{% endblock %}
