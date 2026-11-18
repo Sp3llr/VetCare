@@ -9,22 +9,6 @@ if (sidebar && sidebarToggle) {
     document.querySelector('.app-shell')?.classList.toggle('sidebar-collapsed', collapsed);
     sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
     sidebarToggle.setAttribute('aria-label', collapsed ? 'Expandir menu lateral' : 'Recolher menu lateral');
-    const logoutForm = sidebar.querySelector('.sidebar-logout-form');
-    const logoutButton = sidebar.querySelector('.sidebar-logout');
-    if (logoutForm) {
-      logoutForm.style.width = collapsed && window.innerWidth > 760 ? '38px' : '96px';
-      logoutForm.style.height = '34px';
-      logoutForm.style.margin = '10px auto 0';
-    }
-    if (logoutButton) {
-      logoutButton.style.width = collapsed && window.innerWidth > 760 ? '38px' : '96px';
-      logoutButton.style.height = '34px';
-      logoutButton.style.minHeight = '34px';
-      logoutButton.style.maxHeight = '34px';
-      logoutButton.style.lineHeight = '34px';
-      logoutButton.style.margin = '0';
-      logoutButton.style.padding = collapsed && window.innerWidth > 760 ? '0' : '0 12px';
-    }
     sidebarToggle.title = collapsed ? 'Expandir menu' : 'Recolher menu';
   };
 
